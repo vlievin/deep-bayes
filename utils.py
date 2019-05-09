@@ -50,6 +50,18 @@ def make_cholesky(logvar_ab, cov_ab):
     return (1-m) * cov_ab + torch.diag(std)
 
 
+def onehot(a):
+    """
+    Get one-hot representation of tensor of any number of dimensions.
+    Append one-hot dimension at the end.
+    """
+    
+    ncols = a.max() + 1
+    out = np.zeros((a.size, ncols), dtype=np.uint8)
+    out[np.arange(a.size), a.ravel()] = 1
+    out = out.reshape(a.shape + (ncols,))
+    return out
+
 
 def plot(x=None, y=None, y_lower=None, y_upper=None, color=None,
          alpha=0.2, title='', xlabel='', ylabel='', label=''):
@@ -79,6 +91,17 @@ def add_shading(ax, x=None, lower=None, upper=None, color=None, alpha=0.2):
         x = range(len(lower))
     ax.fill_between(np.array(x), np.array(lower), np.array(upper), color=color, alpha=alpha)
 
+def clean_curr_axes():
+    plt.gca().tick_params(
+        axis='both',  # changes apply to the x-axis
+        which='both',  # both major and minor ticks are affected
+        left=False,  # ticks along the left edge are off
+        right=False,
+        bottom=False,
+        top=False,
+        labelleft=False,  # labels along the left edge are off
+        labelbottom=False)
+    
 if __name__ == '__main__':
     flat_params = torch.tensor([1,2,3,4,5,6])
     print("Input:\n", flat_params)

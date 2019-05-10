@@ -64,12 +64,12 @@ def onehot(a):
 
 
 def plot(x=None, y=None, y_lower=None, y_upper=None, color=None,
-         alpha=0.2, title='', xlabel='', ylabel='', label=''):
+         alpha=0.2, title='', xlabel='', ylabel='', label='', **kwargs):
     ax = plt.gca()
     if x is None:
         x = range(len(y))
     assert x.ndim == 1
-    ax.plot(x, y, color=color, label=label)
+    ax.plot(x, y, color=color, label=label, **kwargs)
 
     if y_lower is not None and y_upper is None:
         y_upper = y
